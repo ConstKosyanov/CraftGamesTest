@@ -2,7 +2,8 @@
 
 public static class Director
 {
-	private static bool isForward = false;
+	private static bool isActive = false;
+	private static bool isForward = true;
 	private static float coef = 1;
 
 	public static Vector3 CameraDirection { get; private set; } = Vector3.zero;
@@ -10,6 +11,7 @@ public static class Director
 
 	private static void SetState(bool newValue)
 	{
+		isActive = true;
 		isForward = newValue;
 		CameraDirection = isForward
 			? Vector3.zero
@@ -20,12 +22,11 @@ public static class Director
 			: Vector3.left * coef;
 	}
 
-	public static void Switch() => SetState(!isForward);
+	public static void Switch() => SetState(isActive != isForward);
 
 	internal static void Stop()
 	{
-		isForward = false;
-		CameraDirection = Vector3.zero;
+		isActive = false;
 		PlatformsDirection = Vector3.zero;
 	}
 

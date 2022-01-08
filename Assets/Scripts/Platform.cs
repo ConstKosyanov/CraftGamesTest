@@ -3,6 +3,7 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
 	public GameObject platformTop;
+	public GameObject bonus;
 	public float speed;
 
 	private void Update()
@@ -13,7 +14,7 @@ public class Platform : MonoBehaviour
 			Destroy(gameObject);
 	}
 
-	internal void SetSize(int scale)
+	public void SetSize(int scale)
 	{
 		var material = platformTop.GetComponent<Renderer>().material;
 		material.mainTextureScale = Vector2.one * scale;
@@ -21,6 +22,8 @@ public class Platform : MonoBehaviour
 			material.mainTextureOffset = new Vector2(.5f, 0);
 		platformTop.transform.localScale = platformTop.transform.localScale * scale;
 	}
+
+	public void SpawnBonus() => Instantiate(bonus, transform);
 
 	public Vector3 Position => transform.position;
 }

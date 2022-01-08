@@ -1,15 +1,16 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-	public event EventHandler OnFail;
+	public UnityEvent onFalling = new UnityEvent();
 
 	private void Update()
 	{
 		if (transform.position.y < .1f)
 		{
-			OnFail?.Invoke(this, new EventArgs());
+			onFalling.Invoke();
 			Destroy(gameObject, 5);
 			enabled = false;
 		}

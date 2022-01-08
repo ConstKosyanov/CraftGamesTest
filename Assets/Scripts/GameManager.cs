@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-	private bool gameMode = true;
+	private bool gameMode = false;
 	private Player playerInstance;
 	private Spawner spawnerInstance;
 
@@ -13,22 +14,34 @@ public class GameManager : MonoBehaviour
 	public YCamera yCamera;
 	public XCamera xCamera;
 	public GameObject gameOverUI;
+	public GameObject pauseUI;
+	public Toggle randomModeToggle;
+	public bool randomBonusSpawning = true;
 
-	public void Start()
+	public void Start() => randomModeToggle.onValueChanged.AddListener(x => randomBonusSpawning = x);
+
+	public void StartGame(int difficulty)
 	{
-		gameMode = true;
-		gameOverUI.SetActive(false);
+		if (!gameMode)
+		{
+			this.difficulty = difficulty;
 
-		spawnerInstance = Instantiate(spawner);
-		spawnerInstance.difficulty = difficulty;
+			gameOverUI.SetActive(false);
 
-		playerInstance = Instantiate(player);
-		playerInstance.OnFail += (s, e) => GameOver();
+			spawnerInstance = Instantiate(spawner);
+			spawnerInstance.difficulty = difficulty;
+			spawnerInstance.randomBonusSpawning = randomBonusSpawning;
 
-		xCamera.mode = XCameraMode.Game;
-		yCamera.mode = CameraMode.Game;
+			playerInstance = Instantiate(player);
+			playerInstance.onFalling.AddListener(GameOver);
 
-		Director.SetDifficulty(difficulty);
+			xCamera.mode = XCameraMode.Game;
+			yCamera.mode = CameraMode.Game;
+
+			Director.SetDifficulty(difficulty);
+
+			gameMode = true;
+		}
 	}
 
 	private void GameOver() => StartCoroutine(GameOverCoroutine());
@@ -37,8 +50,6 @@ public class GameManager : MonoBehaviour
 	{
 		gameMode = false;
 		Director.Stop();
-
-		playerInstance.OnFail -= (s, e) => GameOver();
 
 		xCamera.mode = XCameraMode.PlayerFollowing;
 		yCamera.mode = CameraMode.Menu;
@@ -52,14 +63,23 @@ public class GameManager : MonoBehaviour
 		gameOverUI.SetActive(true);
 	}
 
-	public void Restart()
-	{
-		Start();
-	}
+	public void Restart() => StartGame(difficulty);
 
 	public void Update()
 	{
-		if (gameMode && Input.GetMouseButtonDown(0))
-			Director.Switch();
+		if (gameMode)
+		{
+			if (Input.GetMouseButtonDown(0))
+			{
+				Director.Switch();
+				pauseUI.SetActive(false);
+			}
+
+			if (Input.GetKey(KeyCode.Escape))
+			{
+				Director.Stop();
+				pauseUI.SetActive(true);
+			}
+		}
 	}
 }

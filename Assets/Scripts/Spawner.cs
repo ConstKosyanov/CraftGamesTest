@@ -3,22 +3,30 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
 	private bool active = true;
+	private int bonusCounter;
 	private Platform lastPlatform;
 
 	public Platform platformPrefab;
 	public int difficulty;
+	public bool randomBonusSpawning;
 
-	private void SpawnPlatform(Vector3 position)
+	private void SpawnPlatform(Vector3 position, bool allowBonusSpawning)
 	{
 		lastPlatform = Instantiate(platformPrefab, position, transform.rotation);
 		lastPlatform.SetSize(difficulty);
 		lastPlatform.transform.parent = transform;
+		if (allowBonusSpawning && CanSpawnBonus())
+			lastPlatform.SpawnBonus();
 	}
+
+	private bool CanSpawnBonus() => randomBonusSpawning
+		? Random.value < .2f
+		: (bonusCounter = (1 + bonusCounter % 4)) > 3;
 
 	public void Start()
 	{
-		SpawnPlatform(Vector3.forward * 1.5f + Vector3.forward * difficulty / 2);
-		SpawnPlatform(lastPlatform.transform.position + Vector3.forward * difficulty);
+		SpawnPlatform(Vector3.forward * 1.5f + Vector3.forward * difficulty / 2, false);
+		SpawnPlatform(lastPlatform.transform.position + Vector3.forward * difficulty, false);
 	}
 
 	public void Update()
@@ -26,7 +34,7 @@ public class Spawner : MonoBehaviour
 		if (active)
 		{
 			for (var i = gameObject.transform.childCount; i < 90 / difficulty; i++)
-				SpawnPlatform(GetRandomPosition());
+				SpawnPlatform(GetRandomPosition(), true);
 		}
 		else
 		{
