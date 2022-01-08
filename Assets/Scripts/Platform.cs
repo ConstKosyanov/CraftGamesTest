@@ -15,7 +15,10 @@ public class Platform : MonoBehaviour
 
 	internal void SetSize(int scale)
 	{
-		platformTop.GetComponent<Renderer>().material.mainTextureScale = Vector2.one * scale;
+		var material = platformTop.GetComponent<Renderer>().material;
+		material.mainTextureScale = Vector2.one * scale;
+		if (scale % 2 == 1)
+			material.mainTextureOffset = new Vector2(.5f, 0);
 		platformTop.transform.localScale = platformTop.transform.localScale * scale;
 	}
 

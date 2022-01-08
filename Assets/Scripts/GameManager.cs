@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
 		xCamera.mode = XCameraMode.Game;
 		yCamera.mode = CameraMode.Game;
 		Director.SetDifficulty(difficulty);
-		Director.Switch();
 	}
 
 	private void GameOver() => StartCoroutine(GameOverCoroutine());
