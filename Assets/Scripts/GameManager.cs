@@ -11,15 +11,21 @@ public class GameManager : MonoBehaviour
 	public Player player;
 	public YCamera yCamera;
 	public XCamera xCamera;
+	public GameObject gameOverUI;
 
 	public void Start()
 	{
+		gameOverUI.SetActive(false);
+
 		spawnerInstance = Instantiate(spawner);
-		spawner.difficulty = difficulty;
+		spawnerInstance.difficulty = difficulty;
+
 		playerInstance = Instantiate(player);
 		playerInstance.OnFail += (s, e) => GameOver();
+
 		xCamera.mode = XCameraMode.Game;
 		yCamera.mode = CameraMode.Game;
+
 		Director.SetDifficulty(difficulty);
 	}
 
@@ -27,15 +33,25 @@ public class GameManager : MonoBehaviour
 
 	private IEnumerator GameOverCoroutine()
 	{
-		playerInstance.OnFail -= (s, e) => GameOver();
 		Director.Stop();
-		//mode = CameraMode.Menu;
+
+		playerInstance.OnFail -= (s, e) => GameOver();
+
 		xCamera.mode = XCameraMode.PlayerFollowing;
 		yCamera.mode = CameraMode.Menu;
+
 		yield return new WaitForSeconds(.5f);
+
 		spawnerInstance.Destory();
+		
 		yield return new WaitForSeconds(.5f);
-		//gameOverUI.SetActive(true);
+		
+		gameOverUI.SetActive(true);
+	}
+
+	public void Restart()
+	{
+		Start();
 	}
 
 	public void Update()
