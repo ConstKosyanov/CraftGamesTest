@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+	private bool gameMode = true;
 	private Player playerInstance;
 	private Spawner spawnerInstance;
 
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
 
 	public void Start()
 	{
+		gameMode = true;
 		gameOverUI.SetActive(false);
 
 		spawnerInstance = Instantiate(spawner);
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
 
 	private IEnumerator GameOverCoroutine()
 	{
+		gameMode = false;
 		Director.Stop();
 
 		playerInstance.OnFail -= (s, e) => GameOver();
@@ -43,9 +46,9 @@ public class GameManager : MonoBehaviour
 		yield return new WaitForSeconds(.5f);
 
 		spawnerInstance.Destory();
-		
+
 		yield return new WaitForSeconds(.5f);
-		
+
 		gameOverUI.SetActive(true);
 	}
 
@@ -56,7 +59,7 @@ public class GameManager : MonoBehaviour
 
 	public void Update()
 	{
-		if (Input.GetMouseButtonDown(0))
+		if (gameMode && Input.GetMouseButtonDown(0))
 			Director.Switch();
 	}
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+	private bool active = true;
 	private Platform lastPlatform;
 
 	public Platform platformPrefab;
@@ -22,13 +23,21 @@ public class Spawner : MonoBehaviour
 
 	public void Update()
 	{
-		for (var i = gameObject.transform.childCount; i < 90 / difficulty; i++)
-			SpawnPlatform(GetRandomPosition());
+		if (active)
+		{
+			for (var i = gameObject.transform.childCount; i < 90 / difficulty; i++)
+				SpawnPlatform(GetRandomPosition());
+		}
+		else
+		{
+			transform.Translate(Vector3.up * 10 * Time.deltaTime);
+		}
+
 	}
 
 	public void Destory()
 	{
-		enabled = false;
+		active = false;
 		Destroy(gameObject, 1);
 	}
 
