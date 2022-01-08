@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
 			if (Input.GetKey(KeyCode.Escape))
 			{
-				Director.Stop();
+				Director.Pause();
 				pauseUI.SetActive(true);
 			}
 		}

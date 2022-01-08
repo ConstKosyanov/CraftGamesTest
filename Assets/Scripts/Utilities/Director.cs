@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public static class Director
 {
@@ -24,9 +25,17 @@ public static class Director
 
 	public static void Switch() => SetState(isActive != isForward);
 
+	internal static void Pause()
+	{
+		isActive = false;
+		PlatformsDirection = Vector3.zero;
+	}
+
 	internal static void Stop()
 	{
 		isActive = false;
+		isForward = true;
+		CameraDirection = Vector3.zero;
 		PlatformsDirection = Vector3.zero;
 	}
 
