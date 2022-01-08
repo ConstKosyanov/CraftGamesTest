@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
 			spawnerInstance = Instantiate(spawner);
 			spawnerInstance.difficulty = difficulty;
-			spawnerInstance.randomBonusSpawning = randomBonusSpawning;
+			spawnerInstance.SetRandomBonusSpawning(randomBonusSpawning);
 			spawnerInstance.scoreCaptured = UpdateScore;
 
 			playerInstance = Instantiate(player);

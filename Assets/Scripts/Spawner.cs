@@ -4,11 +4,12 @@ public class Spawner : MonoBehaviour
 {
 	private bool active = true;
 	private int bonusCounter;
+	private int nextRandomTile = 0;
+	private bool randomBonusSpawning;
 	private Platform lastPlatform;
 
 	public Platform platformPrefab;
 	public int difficulty;
-	public bool randomBonusSpawning;
 	public ScoreCapturedDelegate scoreCaptured;
 
 	private void SpawnPlatform(Vector3 position, bool allowBonusSpawning)
@@ -21,9 +22,22 @@ public class Spawner : MonoBehaviour
 			lastPlatform.SpawnBonus();
 	}
 
-	private bool CanSpawnBonus() => randomBonusSpawning
-		? Random.value < .2f
-		: (bonusCounter = (1 + bonusCounter % 5)) > 3;
+	private bool CanSpawnBonus()
+	{
+		if (bonusCounter > 4)
+		{
+			bonusCounter = 0;
+			nextRandomTile = Random.Range(0, 4);
+		}
+
+		return bonusCounter++ == (randomBonusSpawning ? nextRandomTile : 0);
+	}
+
+	public void SetRandomBonusSpawning(bool value)
+	{
+		randomBonusSpawning = value;
+		nextRandomTile = value ? Random.Range(0, 4) : 0;
+	}
 
 	public void Start()
 	{
