@@ -4,12 +4,11 @@ public class Platform : MonoBehaviour
 {
 	public GameObject platformTop;
 	public Bonus bonus;
-	public float speed;
 	public ScoreCapturedDelegate scoreCaptured;
 
 	private void Update()
 	{
-		transform.Translate(Director.PlatformsDirection * speed * Time.deltaTime);
+		transform.Translate(Director.PlatformsDirection * Time.deltaTime);
 
 		if (transform.localPosition.z < -5 || transform.localPosition.y > 15)
 			Destroy(gameObject);

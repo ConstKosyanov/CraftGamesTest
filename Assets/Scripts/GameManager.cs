@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	private readonly ScoreModel scoreModel = new ScoreModel();
 
 	public int difficulty;
+	public float speed;
 	public Spawner spawner;
 	public Player player;
 	public YCamera yCamera;
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
 			xCamera.mode = XCameraMode.Game;
 			yCamera.mode = CameraMode.Game;
 
-			Director.SetDifficulty(difficulty);
+			Director.SetSpeed(speed);
 
 			gameMode = true;
 		}

@@ -2047,6 +2047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficulty: 2
+  speed: 3
   spawner: {fileID: 3254634972690959532, guid: 32dfd93f6ee0d25409d29f0b50230c29, type: 3}
   player: {fileID: 8074846854266029163, guid: 68088572676129e4bb52e1ab10288508, type: 3}
   yCamera: {fileID: 1224786111}

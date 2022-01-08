@@ -4,7 +4,7 @@ public static class Director
 {
 	private static bool isActive = false;
 	private static bool isForward = true;
-	private static float coef = 1;
+	private static float speed = 1;
 
 	public static Vector3 CameraDirection { get; private set; } = Vector3.zero;
 	public static Vector3 PlatformsDirection { get; private set; } = Vector3.zero;
@@ -18,8 +18,8 @@ public static class Director
 			: Vector3.up * 90;
 
 		PlatformsDirection = isForward
-			? Vector3.back * coef
-			: Vector3.left * coef;
+			? Vector3.back * speed
+			: Vector3.left * speed;
 	}
 
 	public static void Switch() => SetState(isActive != isForward);
@@ -30,5 +30,5 @@ public static class Director
 		PlatformsDirection = Vector3.zero;
 	}
 
-	public static void SetDifficulty(int difficulty) => coef = 1 - (2 - difficulty) / 4;
+	public static void SetSpeed(float s) => speed = s;
 }
