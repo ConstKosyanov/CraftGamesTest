@@ -10,6 +10,7 @@ public class Bonus : MonoBehaviour
 	public float pulseSpeed;
 	public float breakCoefficient;
 	public ParticleSystem particles;
+	public ScoreCapturedDelegate scoreCaptured;
 
 	private void Update()
 	{
@@ -27,5 +28,6 @@ public class Bonus : MonoBehaviour
 	{
 		Instantiate(particles, transform.parent);
 		Destroy(gameObject);
+		scoreCaptured?.Invoke(ScoreType.Cristal);
 	}
 }

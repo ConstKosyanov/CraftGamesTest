@@ -493,6 +493,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3413189841870011756}
+  - component: {fileID: 7752159102228120853}
   - component: {fileID: 3042304786275374035}
   m_Layer: 0
   m_Name: Platform
@@ -516,6 +517,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7752159102228120853
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8107111695966327307}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &3042304786275374035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,5 +543,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformTop: {fileID: 5430041268317617305}
-  bonus: {fileID: 1836714038766424365, guid: cf84ae7f49c521a45a58d2f8b72b0405, type: 3}
+  bonus: {fileID: 1836714038766424367, guid: cf84ae7f49c521a45a58d2f8b72b0405, type: 3}
   speed: 3

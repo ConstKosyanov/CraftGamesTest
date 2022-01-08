@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 	private bool gameMode = false;
 	private Player playerInstance;
 	private Spawner spawnerInstance;
+	private readonly ScoreModel scoreModel = new ScoreModel();
 
 	public int difficulty;
 	public Spawner spawner;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
 	public XCamera xCamera;
 	public GameObject gameOverUI;
 	public GameObject pauseUI;
+	public Score scoreUI;
 	public Toggle randomModeToggle;
 	public bool randomBonusSpawning = true;
 
@@ -27,10 +29,12 @@ public class GameManager : MonoBehaviour
 			this.difficulty = difficulty;
 
 			gameOverUI.SetActive(false);
+			scoreUI.gameObject.SetActive(true);
 
 			spawnerInstance = Instantiate(spawner);
 			spawnerInstance.difficulty = difficulty;
 			spawnerInstance.randomBonusSpawning = randomBonusSpawning;
+			spawnerInstance.scoreCaptured = UpdateScore;
 
 			playerInstance = Instantiate(player);
 			playerInstance.onFalling.AddListener(GameOver);
@@ -42,6 +46,17 @@ public class GameManager : MonoBehaviour
 
 			gameMode = true;
 		}
+	}
+
+	private void UpdateScore(ScoreType type)
+	{
+		switch (type)
+		{
+			case ScoreType.Tile: scoreModel.Tiles++; break;
+			case ScoreType.Cristal: scoreModel.Cristals++; break;
+		}
+
+		scoreUI.ShowScore(scoreModel);
 	}
 
 	private void GameOver() => StartCoroutine(GameOverCoroutine());

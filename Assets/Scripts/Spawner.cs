@@ -9,10 +9,12 @@ public class Spawner : MonoBehaviour
 	public Platform platformPrefab;
 	public int difficulty;
 	public bool randomBonusSpawning;
+	public ScoreCapturedDelegate scoreCaptured;
 
 	private void SpawnPlatform(Vector3 position, bool allowBonusSpawning)
 	{
 		lastPlatform = Instantiate(platformPrefab, position, transform.rotation);
+		lastPlatform.scoreCaptured = scoreCaptured;
 		lastPlatform.SetSize(difficulty);
 		lastPlatform.transform.parent = transform;
 		if (allowBonusSpawning && CanSpawnBonus())
@@ -21,7 +23,7 @@ public class Spawner : MonoBehaviour
 
 	private bool CanSpawnBonus() => randomBonusSpawning
 		? Random.value < .2f
-		: (bonusCounter = (1 + bonusCounter % 4)) > 3;
+		: (bonusCounter = (1 + bonusCounter % 5)) > 3;
 
 	public void Start()
 	{
