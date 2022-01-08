@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class SpawnController : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
-	private PlatformController lastPlatform;
+	private Platform lastPlatform;
 
-	public PlatformController platformPrefab;
+	public Platform platformPrefab;
 	public int difficulty;
 
 	private void SpawnPlatform(Vector3 position)
@@ -24,6 +24,12 @@ public class SpawnController : MonoBehaviour
 	{
 		for (var i = gameObject.transform.childCount; i < 90 / difficulty; i++)
 			SpawnPlatform(GetRandomPosition());
+	}
+
+	public void Destory()
+	{
+		enabled = false;
+		Destroy(gameObject, 1);
 	}
 
 	private Vector3 GetRandomPosition() => lastPlatform.transform.position + GetRandomDirection();

@@ -1,18 +1,16 @@
 using UnityEngine;
 
-public class PlatformController : MonoBehaviour
+public class Platform : MonoBehaviour
 {
 	public GameObject platformTop;
+	public float speed;
 
-	private void Start()
-	{
-
-	}
-
-	// Update is called once per frame
 	private void Update()
 	{
+		transform.Translate(Director.PlatformsDirection * speed * Time.deltaTime);
 
+		if (transform.localPosition.z < -5 || transform.localPosition.y > 15)
+			Destroy(gameObject);
 	}
 
 	internal void SetSize(int scale)
