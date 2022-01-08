@@ -529,4 +529,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platformTop: {fileID: 5430041268317617305}
+  bonus: {fileID: 1836714038766424365, guid: cf84ae7f49c521a45a58d2f8b72b0405, type: 3}
   speed: 3
