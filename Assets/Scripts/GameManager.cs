@@ -9,14 +9,17 @@ public class GameManager : MonoBehaviour
 	public int difficulty;
 	public Spawner spawner;
 	public Player player;
+	public YCamera yCamera;
+	public XCamera xCamera;
 
-	// Start is called before the first frame update
 	public void Start()
 	{
 		spawnerInstance = Instantiate(spawner);
 		spawner.difficulty = difficulty;
 		playerInstance = Instantiate(player);
 		playerInstance.OnFail += (s, e) => GameOver();
+		xCamera.mode = XCameraMode.Game;
+		yCamera.mode = CameraMode.Game;
 		Director.SetDifficulty(difficulty);
 		Director.Switch();
 	}
@@ -28,8 +31,8 @@ public class GameManager : MonoBehaviour
 		playerInstance.OnFail -= (s, e) => GameOver();
 		Director.Stop();
 		//mode = CameraMode.Menu;
-		//xCamera.FollowThePlayer();
-		//yCamera.mode = CameraMode.Menu;
+		xCamera.mode = XCameraMode.PlayerFollowing;
+		yCamera.mode = CameraMode.Menu;
 		yield return new WaitForSeconds(.5f);
 		spawnerInstance.Destory();
 		yield return new WaitForSeconds(.5f);
